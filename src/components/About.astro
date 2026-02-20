@@ -1,0 +1,173 @@
+---
+const stats = [
+  { number: '55',    label: 'Members Max' },
+  { number: '$50',   label: 'Per Month' },
+  { number: '100%',  label: 'Exclusive Access' },
+  { number: '∞',     label: 'Connections Made' },
+];
+---
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Card Visual -->
+      <div class="about-visual reveal">
+        <div class="about-card-visual">
+          <div class="card-inner">
+            <div class="card-tagline">Raising The Bar</div>
+            <div class="card-name">Lounge</div>
+            <div class="card-number">55</div>
+            <div class="card-vip">VIP Membership</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="about-content">
+        <div class="section-label reveal">The Experience</div>
+        <h2 class="section-title reveal reveal-delay-1">
+          Where <span>Elite</span> Meets Exclusive
+        </h2>
+        <p class="section-body reveal reveal-delay-2">
+          Lounge 55 is more than a venue — it's a curated community built for those who expect more.
+          With exclusive access strictly limited to 55 members, every seat matters.
+          Whether you're building business relationships, celebrating milestones, or simply unwinding
+          in a space that matches your standards, Lounge 55 was designed for you.
+        </p>
+
+        <div class="about-stats">
+          {stats.map(({ number, label }, i) => (
+            <div class={`stat-box reveal reveal-delay-${(i % 2) + 1}`}>
+              <div class="stat-number">{number}</div>
+              <div class="stat-label">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #about { background: var(--dark-2); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* ─ Card Visual ─ */
+  .about-card-visual {
+    width: 100%;
+    aspect-ratio: 1.586;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,101,10,0.15);
+  }
+  .about-card-visual::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 100px 100px 0 0;
+    border-color: var(--orange) transparent transparent transparent;
+  }
+  .about-card-visual::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 0 100px 100px;
+    border-color: transparent transparent var(--orange) transparent;
+  }
+
+  .card-inner {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .card-tagline,
+  .card-vip {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  .card-tagline { margin-bottom: 4px; }
+  .card-vip    { margin-top: 4px; }
+  .card-tagline::before, .card-tagline::after,
+  .card-vip::before,    .card-vip::after {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--orange);
+  }
+
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .card-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4.5rem;
+    background: linear-gradient(160deg, #FF9500, #C44F00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  /* ─ Stats ─ */
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .stat-box {
+    border-top: 2px solid var(--orange);
+    padding-top: 16px;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 800px) {
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
