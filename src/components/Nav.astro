@@ -13,6 +13,10 @@ const links = [
       <li><a href={href}>{label}</a></li>
     ))}
   </ul>
+  <div class="nav-actions">
+    <a href="#/portal/signin" class="nav-signin">Member Login</a>
+    <a href="#/portal/signup" class="nav-join-btn">Join Now</a>
+  </div>
   <button class="nav-mobile-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
 
@@ -63,9 +67,46 @@ const links = [
     cursor: pointer;
   }
 
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .nav-signin {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-signin:hover { color: var(--orange); }
+
+  .nav-join-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--orange-bright), var(--orange-dark));
+    padding: 10px 24px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all 0.3s;
+  }
+  .nav-join-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(232,101,10,0.45);
+  }
+
   @media (max-width: 800px) {
     nav { padding: 16px 20px; }
     .nav-links { display: none; }
+    .nav-actions { gap: 14px; }
+    .nav-signin { display: none; }
     .nav-mobile-toggle { display: block; }
   }
 </style>
