@@ -1,15 +1,36 @@
 ---
-const benefits = [
-  'Exclusive Lounge Access',
-  '10% Off Gear & Merchandise',
-  'Business Community Resources',
-  'Priority Booking of Space',
-  'Business Networking Nights',
-  'Elite Invite-Only Events',
-  'Game Nights',
-  'Complimentary Drinks',
-  'Podcast & Website Marketing',
-  'Monthly Drawings for Sports Events',
+const tiers = [
+  {
+    name: 'Basic Membership',
+    price: '$25',
+    period: 'per month',
+    featured: false,
+    benefits: [
+      'Exclusive Lounge Access',
+      '10% Off Gear & Merchandise',
+      'Business Community Resources',
+      'Game Nights',
+      'Complimentary Drinks',
+    ],
+  },
+  {
+    name: 'Elite Membership',
+    price: '$50',
+    period: 'per month',
+    featured: true,
+    benefits: [
+      'Exclusive Lounge Access',
+      '10% Off Gear & Merchandise',
+      'Business Community Resources',
+      'Priority Booking of Space',
+      'Business Networking Nights',
+      'Elite Invite-Only Events',
+      'Game Nights',
+      'Complimentary Drinks',
+      'Podcast & Website Marketing',
+      'Monthly Drawings for Sports Events',
+    ],
+  },
 ];
 ---
 
@@ -19,31 +40,52 @@ const benefits = [
     <div class="membership-header">
       <div class="section-label centered reveal">What You Get</div>
       <h2 class="section-title reveal reveal-delay-1">
-        Elite <span>Membership</span> Benefits
+        Choose Your <span>Membership</span>
       </h2>
-      <div class="price-badge reveal reveal-delay-2">
-        <span class="price-label">Elite Membership</span>
-        <span class="price-amount">$50</span>
-        <span class="price-period">per month</span>
-      </div>
+      <p class="membership-sub reveal reveal-delay-2">
+        Both tiers are limited to 55 members only. Choose the level that fits your lifestyle.
+      </p>
     </div>
 
-    <div class="benefits-grid">
-      {benefits.map((benefit, i) => (
-        <div class={`benefit-item reveal reveal-delay-${(i % 3) + 1}`}>
-          <div class="benefit-check">
-            <svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="1.5 5 4.5 8 10.5 2" />
-            </svg>
+    <div class="tiers-grid">
+      {tiers.map((tier, ti) => (
+        <div class={`tier-card reveal reveal-delay-${ti + 1}${tier.featured ? ' tier-featured' : ''}`}>
+          {tier.featured && <div class="tier-badge">Most Popular</div>}
+
+          <div class="tier-header">
+            <div class="tier-name">{tier.name}</div>
+            <div class="tier-price">
+              <span class="tier-amount">{tier.price}</span>
+              <span class="tier-period">{tier.period}</span>
+            </div>
           </div>
-          <div class="benefit-text">{benefit}</div>
+
+          <ul class="tier-benefits">
+            {tier.benefits.map((benefit) => (
+              <li class="benefit-item">
+                <div class="benefit-check">
+                  <svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1.5 5 4.5 8 10.5 2" />
+                  </svg>
+                </div>
+                <span class="benefit-text">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="https://members.lounge55.club/#/portal/signup"
+            class={tier.featured ? 'btn-primary tier-cta' : 'btn-outline tier-cta'}
+          >
+            Join Now
+          </a>
         </div>
       ))}
     </div>
 
     <div class="limit-banner reveal">
       <div class="limit-line"></div>
-      <div class="limit-text">This Membership Is Limited To 55 Members Only</div>
+      <div class="limit-text">Both Memberships Are Limited To 55 Members Only</div>
       <div class="limit-line right"></div>
     </div>
 
@@ -70,69 +112,136 @@ const benefits = [
     background: rgba(232,101,10,0.3);
   }
 
-  /* ─ Price badge ─ */
-  .price-badge {
-    display: inline-flex;
+  .membership-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─ Tiers Grid ─ */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ─ Tier Card ─ */
+  .tier-card {
+    position: relative;
+    background: var(--dark-2);
+    border: 1px solid rgba(232,101,10,0.15);
+    padding: 40px 36px 36px;
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    padding: 20px 56px;
-    margin-top: 24px;
+    gap: 28px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .tier-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 80px 80px 0 0;
+    border-color: rgba(232,101,10,0.08) transparent transparent transparent;
+  }
+  .tier-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 0 80px 80px;
+    border-color: transparent transparent rgba(232,101,10,0.08) transparent;
+  }
+  .tier-card:hover {
+    border-color: rgba(232,101,10,0.35);
   }
 
-  .price-label {
+  /* Featured (Elite) card */
+  .tier-featured {
+    border-color: rgba(232,101,10,0.4);
+    background: var(--dark-3);
+  }
+  .tier-featured::before {
+    border-color: rgba(232,101,10,0.18) transparent transparent transparent;
+  }
+  .tier-featured::after {
+    border-color: transparent transparent rgba(232,101,10,0.18) transparent;
+  }
+
+  /* ─ Badge ─ */
+  .tier-badge {
+    position: absolute;
+    top: 20px; right: -28px;
+    background: linear-gradient(135deg, var(--orange-bright), var(--orange-dark));
+    color: var(--white);
     font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    color: rgba(255,255,255,0.8);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    padding: 6px 40px;
+    transform: rotate(45deg);
+    transform-origin: center;
+    top: 28px;
+    right: -30px;
   }
 
-  .price-amount {
+  /* ─ Header ─ */
+  .tier-header {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tier-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .tier-amount {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem;
+    font-size: 4rem;
     color: var(--white);
     line-height: 1;
   }
 
-  .price-period {
+  .tier-period {
     font-family: 'Lato', sans-serif;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
   }
 
-  /* ─ Benefits Grid ─ */
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: rgba(232,101,10,0.08);
-    border: 1px solid rgba(232,101,10,0.15);
+  /* ─ Benefits ─ */
+  .tier-benefits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
   }
 
   .benefit-item {
-    background: var(--dark-2);
-    padding: 28px;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    transition: background 0.3s;
-    position: relative;
-    overflow: hidden;
+    gap: 14px;
   }
-  .benefit-item::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 0;
-    background: var(--orange);
-    transition: height 0.3s;
-  }
-  .benefit-item:hover { background: var(--dark-3); }
-  .benefit-item:hover::before { height: 100%; }
 
   .benefit-check {
     width: 20px;
@@ -143,7 +252,7 @@ const benefits = [
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 1px;
     color: var(--orange);
   }
 
@@ -157,12 +266,19 @@ const benefits = [
     font-size: 0.9rem;
     color: var(--off-white);
     line-height: 1.4;
-    font-weight: 400;
+  }
+
+  /* ─ CTA ─ */
+  .tier-cta {
+    display: block;
+    text-align: center;
+    position: relative;
+    z-index: 1;
   }
 
   /* ─ Limit Banner ─ */
   .limit-banner {
-    margin-top: 40px;
+    margin-top: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -189,6 +305,7 @@ const benefits = [
   }
 
   @media (max-width: 800px) {
-    .benefits-grid { grid-template-columns: 1fr; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tier-card { padding: 36px 24px 28px; }
   }
 </style>
